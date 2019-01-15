@@ -1,6 +1,8 @@
 pipeline {
-	def server = Artifactory.newServer url: Artifactory
-	def rtMaven = Artifactory.newMavenBuild()
+    environment {
+		server = Artifactory.newServer url: Artifactory
+		rtMaven = Artifactory.newMavenBuild()
+	}
 	
 	agent any
 	stages {
