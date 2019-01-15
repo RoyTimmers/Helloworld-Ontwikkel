@@ -1,19 +1,31 @@
 pipeline {
+	def server = Artifactory.newServer url: Artifactory
+	def rtMaven = Artifactory.newMavenBuild()
+	
 	agent any
 	stages {
-		stage('---clean---') {
+		stage('build') {
 			steps {
-				bat "mvn clean"
+				bat "mvn compile"
 			}
 		}
-		stage('---test---') {
+		stage('Artifactory configuration') {
 			steps {
-				bat "mvn test"
+				rtMaven.tool = 'Local Maven' // Tool name from Jenkins configuration
+				rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', sserver: server
+				rtMaven.resolver releaseRepo:'libs-release', snapshotRepo'libs-snapshot', server: server
+				def buildInfo = Artifactory.newBuildInfo()
+				buildInfo.env.capture = true
 			}
 		}
-		stage('---package--') {
+		stage('exec Maven') {
 			steps {
-				bat "mvn package"
+				rtMaven.run pom: 'maven-example/pom.xml', goals: 'clean install', buildInfo: buildInfo
+			}
+		}
+		stage('Publish build info') {
+			steps {
+				server.publishBuildInfo buildInfo
 			}
 		}
 	}
