@@ -13,13 +13,6 @@ pipeline {
 		}
 		stage('Artifactory configuration') {
 			steps {
-				script {
-					rtMaven.tool = 'Local Maven' // Tool name from Jenkins configuration
-					rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: server
-					rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: server
-					def buildInfo = Artifactory.newBuildInfo()
-					buildInfo.env.capture = true
-				}
 			}
 		}
 		stage('exec Maven') {
