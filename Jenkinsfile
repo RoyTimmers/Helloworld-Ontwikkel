@@ -11,7 +11,7 @@ node {
     }
 
     stage ('Exec Maven') {
-        rtMaven.run pom: 'java-maven-junit-helloworld-master/pom.xml', goals: 'test', buildInfo: buildInfo
+        rtMaven.run pom: 'Ontwikkel omgeving/pom.xml', goals: 'test', buildInfo: buildInfo
     }
 
     stage ('Publish build info') {
