@@ -1,6 +1,6 @@
 pipeline {
     environment {
-		server = Artifactory.newServer url: Artifactory
+		server = Artifactory.newServer url: 'Artifactory'
 		rtMaven = Artifactory.newMavenBuild()
 	}
 	
