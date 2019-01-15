@@ -13,6 +13,7 @@ pipeline {
 		}
 		stage('Artifactory configuration') {
 			steps {
+			echo 'hello'
 			}
 		}
 		stage('exec Maven') {
