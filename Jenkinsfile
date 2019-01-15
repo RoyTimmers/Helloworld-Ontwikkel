@@ -11,7 +11,7 @@ node {
     }
 
     stage ('Exec Maven') {
-        rtMaven.run pom: 'pom.xml', goals: 'test', buildInfo: buildInfo
+        rtMaven.run pom: 'pom.xml', goals: 'verify', buildInfo: buildInfo
     }
 
     stage ('Publish build info') {
