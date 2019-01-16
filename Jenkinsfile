@@ -1,7 +1,11 @@
 node {
-    def server = Artifactory.newServer url: 'Artifactory'
+    def server = Artifactory.server 'Artifactory'
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
+	
+	stage ('Clone') {
+        git url: 'https://github.com/JFrog/project-examples.git'
+    }
 
     stage ('Artifactory configuration') {
         rtMaven.tool = 'Local Maven' // Tool name from Jenkins configuration
